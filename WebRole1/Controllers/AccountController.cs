@@ -35,10 +35,17 @@ namespace WebRole1.Controllers
                 {
                     SignIn(claims);
 
-                    return RedirectToLocal(returnUrl);
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
-            return Content("error");
+            return View();
         }
 
         private List<Claim> GetClaims()
@@ -71,6 +78,7 @@ namespace WebRole1.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties()
             {
+                //AllowRefresh = true,
                 IsPersistent = false
             }, claimsIdentity);
 
@@ -97,13 +105,11 @@ namespace WebRole1.Controllers
             }
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
+            Session.Clear();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
