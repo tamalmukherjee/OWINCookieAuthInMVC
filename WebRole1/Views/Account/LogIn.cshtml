@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<h2>LogIn</h2>
+
+@using(Html.BeginForm()){
+
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="returnUrl" value="@ViewBag.ReturnUrl" />
+    @Html.Label("User: ") @Html.TextBox("userid") @Html.Label("Pass: ") @Html.Password("password") <input type="submit" value="Submit" />
+}
+
