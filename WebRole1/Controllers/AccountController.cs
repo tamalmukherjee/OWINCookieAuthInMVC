@@ -2,6 +2,7 @@
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
@@ -35,7 +36,7 @@ namespace WebRole1.Controllers
                 {
                     SignIn(claims);
 
-                    if (string.IsNullOrEmpty(returnUrl))
+                    if (!string.IsNullOrEmpty(returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
@@ -71,7 +72,7 @@ namespace WebRole1.Controllers
 
         private void SignIn(List<Claim> claims)
         {
-            var claimsIdentity = new ClaimsIdentity(claims,    DefaultAuthenticationTypes.ApplicationCookie);
+            var claimsIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
             //This uses OWIN authentication
 
@@ -83,6 +84,7 @@ namespace WebRole1.Controllers
             }, claimsIdentity);
 
             HttpContext.User = new ClaimsPrincipal(AuthenticationManager.AuthenticationResponseGrant.Principal);
+            //Session["LoggedinUserId"] = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
         }
 
         private IAuthenticationManager AuthenticationManager

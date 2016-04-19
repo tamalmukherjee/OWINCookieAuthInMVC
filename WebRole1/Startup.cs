@@ -20,6 +20,7 @@ namespace WebRole1
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                CookieName = ".cnusrauth",
                 LoginPath = new PathString("/Account/Login"),
                 CookieSecure = CookieSecureOption.Always,
                 SlidingExpiration = true,
