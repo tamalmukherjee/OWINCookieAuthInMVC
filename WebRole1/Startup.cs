@@ -24,10 +24,12 @@ namespace WebRole1
                 LoginPath = new PathString("/Account/Login"),
                 CookieSecure = CookieSecureOption.Always,
                 SlidingExpiration = true,
-                ExpireTimeSpan = TimeSpan.FromMinutes(30)
+                ExpireTimeSpan = TimeSpan.FromMinutes(30),
+                CookieManager = new SystemWebCookieManager()
             });
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
+
     }
 }

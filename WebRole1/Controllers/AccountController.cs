@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace WebRole1.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //http://www.codeproject.com/Tips/849113/Four-Easy-Steps-to-Set-Up-OWIN-for-Form-authentica
 
@@ -72,6 +72,8 @@ namespace WebRole1.Controllers
 
         private void SignIn(List<Claim> claims)
         {
+            Session["LoggedinUserId"] = "";
+
             var claimsIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
             //This uses OWIN authentication
@@ -84,7 +86,7 @@ namespace WebRole1.Controllers
             }, claimsIdentity);
 
             HttpContext.User = new ClaimsPrincipal(AuthenticationManager.AuthenticationResponseGrant.Principal);
-            //Session["LoggedinUserId"] = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            Session["LoggedinUserId"] = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
         }
 
         private IAuthenticationManager AuthenticationManager
