@@ -3,7 +3,7 @@ using Microsoft.Owin.Infrastructure;
 using System;
 using System.Web;
 
-namespace WebRole1
+namespace WebRole1.UserAuth
 {
     public class SystemWebCookieManager : ICookieManager
     {

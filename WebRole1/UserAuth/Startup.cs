@@ -7,16 +7,17 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using System.Web.Helpers;
 
-[assembly: OwinStartup(typeof(WebRole1.Startup))]
+[assembly: OwinStartup(typeof(WebRole1.UserAuth.Startup))]
 
-namespace WebRole1
+namespace WebRole1.UserAuth
 {
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
             // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=316888
-            System.Web.Helpers.AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Email;
+
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
@@ -26,10 +27,7 @@ namespace WebRole1
                 SlidingExpiration = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(30),
                 CookieManager = new SystemWebCookieManager()
-            });
-
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+            });            
         }
-
     }
 }
